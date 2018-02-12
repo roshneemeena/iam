@@ -1,4 +1,4 @@
-package launcher;
+package fr.epita.iamfinal.launcher;
 
 import fr.epita.iamfinal.datamodel.Identity;
 import fr.epita.iamfinal.services.dao.ConfigurationService;
