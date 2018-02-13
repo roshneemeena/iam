@@ -1,4 +1,6 @@
 package fr.epita.iamfinal.services.dao;
+import fr.epita.iamfinal.exceptions.IdentityCreateException;
+import fr.epita.iamfinal.exceptions.IdentitySearchException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,19 +9,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.security.auth.login.Configuration;
+import fr.epita.logger.Logger;
 
 import fr.epita.iamfinal.datamodel.Identity;
+import fr.epita.iamfinal.exceptions.IdentityCreateException;
 
 public class IdentityJDBCDAO implements IdentityDAO{
+	
+	private static final Logger LOGGER = new Logger(IdentityJDBCDAO.class);
 	
 	private static final String DB_Host= "db.host";
 	private static final String DB_Pwd= "db.pwd";
 	private static final String DB_User= "db.user";
 	@Override
-	public void create(Identity identity) {
+	public void create(Identity identity) throws IdentityCreateException {
 		
+		LOGGER.info("creating identity" + identity);
+				 
 		Connection connetion = null;
 		try {
 			connetion = getConnection();
@@ -30,9 +36,9 @@ public class IdentityJDBCDAO implements IdentityDAO{
 			prestmt.setString(3, identity.getDisplayName());
 			prestmt.execute();
  
-		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (final Exception e) {
+			LOGGER.error("error in creating this identity " +identity);
+			throw new IdentityCreateException(e, identity);
 		}
 		
 		finally {
@@ -48,8 +54,9 @@ public class IdentityJDBCDAO implements IdentityDAO{
 		
 		}
 	@Override
-	public List<Identity> search(Identity criteria) {
+	public List<Identity> search(Identity criteria) throws IdentitySearchException {
 		
+		LOGGER.info("search of the identity :" + criteria);
 		final List<Identity> result = new ArrayList<>();
 		Connection connection = null;
 		try {
@@ -78,8 +85,8 @@ public class IdentityJDBCDAO implements IdentityDAO{
 			
 					
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.error("Error while searching "+ criteria);
+			throw new IdentitySearchException(e, criteria);
 		}
 		finally {
 			try {
@@ -95,7 +102,7 @@ public class IdentityJDBCDAO implements IdentityDAO{
 	}
 	@Override
 	public void update(Identity identity) {
-		
+		LOGGER.info("The update starts for the identity" +identity);
 		Connection connection = null;
 		try {
 			connection = getConnection();
@@ -106,14 +113,15 @@ public class IdentityJDBCDAO implements IdentityDAO{
 			pstmt.setString(3, identity.getUid());
 			pstmt.executeUpdate();
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
+			LOGGER.error("error while updating the identity " + identity);
 			e.printStackTrace();
 		}
 		
 	}
 	@Override
 	public void delete(Identity identity) {
-		
+		LOGGER.info("The deletion of the begins for : " +identity);
+	
 		Connection connection = null;
 		try {
 			connection = getConnection();
@@ -125,7 +133,7 @@ public class IdentityJDBCDAO implements IdentityDAO{
 			preparestmt.executeUpdate();
 			
             } catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
+			LOGGER.error("Error while deleting the identity " + identity);
 			e.printStackTrace();
 		}
 	}

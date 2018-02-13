@@ -1,12 +1,13 @@
 package fr.epita.iamfinal.launcher;
 
 import fr.epita.iamfinal.datamodel.Identity;
+import fr.epita.iamfinal.exceptions.IdentityCreateException;
 import fr.epita.iamfinal.services.dao.ConfigurationService;
 import fr.epita.iamfinal.services.dao.IdentityJDBCDAO;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IdentityCreateException {
 		// TODO Auto-generated method stub
 		final String confFile = args [0];
 		if(confFile == null || confFile.isEmpty()) {
@@ -24,7 +25,7 @@ public class Main {
 		id1.setUid("210");
 		System.out.println(id1);
 		final IdentityJDBCDAO idjdbc = new IdentityJDBCDAO();
-		idjdbc.create(id1);
+		idjdbc.create(id1) ;
 		
 		
 
