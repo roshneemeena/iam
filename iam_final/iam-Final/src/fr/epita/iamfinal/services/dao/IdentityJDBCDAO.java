@@ -12,144 +12,236 @@ import java.util.List;
 import fr.epita.logger.Logger;
 
 import fr.epita.iamfinal.datamodel.Identity;
-import fr.epita.iamfinal.exceptions.IdentityCreateException;
+
 
 public class IdentityJDBCDAO implements IdentityDAO{
 	
-	private static final Logger LOGGER = new Logger(IdentityJDBCDAO.class);
-	
+	//private static final String DB_Host = "dbURL";
 	private static final String DB_Host= "db.host";
 	private static final String DB_Pwd= "db.pwd";
 	private static final String DB_User= "db.user";
+
 	@Override
-	public void create(Identity identity) throws IdentityCreateException {
+	public void create(Identity identity) {
 		
-		LOGGER.info("creating identity" + identity);
-				 
-		Connection connetion = null;
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
 		try {
-			connetion = getConnection();
-			final PreparedStatement prestmt = connetion
-					.prepareStatement("INSERT INTO IDENTITIES(UID, EMAIL, DISPLAY_NAME) VALUES (? , ? ,?)");
-			prestmt.setString(1, identity.getUid());
-			prestmt.setString(2, identity.getEmail());
-			prestmt.setString(3, identity.getDisplayName());
-			prestmt.execute();
- 
-		} catch (final Exception e) {
-			LOGGER.error("error in creating this identity " +identity);
-			throw new IdentityCreateException(e, identity);
+			connection = getConnection();
+
+			String insertTableSQL = "INSERT INTO IDENTITIESS(UID, EMAIL, DISPLAY_NAME) VALUES (? , ? ,?)";
+			preparedStatement = connection.prepareStatement(insertTableSQL);
+			preparedStatement.setString(1, identity.getUid());
+			preparedStatement.setString(2, identity.getEmail());
+			preparedStatement.setString(3, identity.getDisplayName());
+			// execute insert SQL statement
+			preparedStatement.executeUpdate();
+			System.out.println("the identity is insereted");
+
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
+
 		finally {
-			
-			if (connetion != null) {
+
+			if (preparedStatement != null) {
 				try {
-					connetion.close();
-				} catch (final SQLException e) {
-					
+					preparedStatement.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 		}
-		
-		}
+
+	}
+
 	@Override
-	public List<Identity> search(Identity criteria) throws IdentitySearchException {
-		
-		LOGGER.info("search of the identity :" + criteria);
+	public List<Identity> search(Identity criteria) {
+
 		final List<Identity> result = new ArrayList<>();
 		Connection connection = null;
+		ResultSet rs;
 		try {
 			connection = getConnection();
-			final String search = 
-				  "SELECT DISPLAY_NAME, EMAIL, UID FROM IDENTITIES " + "WHERE (? IS NULL OR DISPLAY_NAME LIKE ?)" +
-			       "AND (? IS NULL OR EMAIL LIKE ?)" + " AND (? IS NULL OR UID = ?)";
-			final PreparedStatement prstmt = connection.prepareStatement(search);
+			 String search = "SELECT DISPLAY_NAME, EMAIL, UID FROM IDENTITIESS "
+					+ "WHERE (? IS NULL OR DISPLAY_NAME LIKE ?)" + "AND (? IS NULL OR EMAIL LIKE ?)"
+					+ " AND (? IS NULL OR UID = ?)";
+			
+			 PreparedStatement prstmt = connection.prepareStatement(search);
 			prstmt.setString(1, criteria.getDisplayName());
 			prstmt.setString(2, criteria.getDisplayName() + "%");
 			prstmt.setString(3, criteria.getEmail());
 			prstmt.setString(4, criteria.getEmail() + "%");
 			prstmt.setString(5, criteria.getUid());
 			prstmt.setString(6, criteria.getUid() + "%");
-			final ResultSet rs = prstmt.executeQuery();
-			while (rs.next()) 
-			{
-				final Identity currentIdentity = new Identity();
-				currentIdentity.setDisplayName(rs.getString("Display_Name"));
+			rs = prstmt.executeQuery();
+						
+			while (rs.next()) {
+				Identity currentIdentity = new Identity();
+				currentIdentity.setDisplayName(rs.getString("DISPLAY_NAME"));
+				currentIdentity.setDisplayName(rs.getString("DISPLAY_NAME"));
 				currentIdentity.setEmail(rs.getString("EMAIL"));
 				currentIdentity.setUid(rs.getString("UID"));
+				System.out.println(currentIdentity.getDisplayName());
+				System.out.println(currentIdentity.getEmail());
 				result.add(currentIdentity);
-				
-				
+							
+
 			}
 			
-					
+			rs.close();
+
 		} catch (ClassNotFoundException | SQLException e) {
-			LOGGER.error("Error while searching "+ criteria);
-			throw new IdentitySearchException(e, criteria);
-		}
-		finally {
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
 			try {
 				connection.close();
 			} catch (final SQLException e) {
 				e.printStackTrace();
 			}
 		}
-		
+		System.out.println("search is done");
+
 		return result;
 		
-		
+
 	}
+
 	@Override
-	public void update(Identity identity) {
-		LOGGER.info("The update starts for the identity" +identity);
+	public void update(Identity identity , Identity identity1) {
 		Connection connection = null;
+		PreparedStatement pstmt = null;
 		try {
 			connection = getConnection();
-			final String update = " UPDATE IDENTITIES SET DISPLAY_NAME = ? ," + "EMAIL = ? " + "UID = ? " ;
-			final PreparedStatement pstmt = connection.prepareStatement(update);
+			//String update = " UPDATE IDENTITIESS SET DISPLAY_NAME = ? AND EMAIL = ? AND UID = ? WHERE DISPLAY_NAME = ? AND EMAIL = ? AND UID = ?";
+			String update = " UPDATE IDENTITIESS SET DISPLAY_NAME = ?, EMAIL = ?,  UID = ? WHERE DISPLAY_NAME = ? AND EMAIL = ? AND UID = ?";
+			 pstmt = connection.prepareStatement(update);
 			pstmt.setString(1, identity.getDisplayName());
-			pstmt.setString(2,	identity.getEmail());
+			pstmt.setString(2, identity.getEmail());
 			pstmt.setString(3, identity.getUid());
+			pstmt.setString(4, identity1.getDisplayName());
+			pstmt.setString(5, identity1.getEmail());
+			pstmt.setString(6, identity1.getUid());
+		
 			pstmt.executeUpdate();
 		} catch (ClassNotFoundException | SQLException e) {
-			LOGGER.error("error while updating the identity " + identity);
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		finally {
+
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+
 	}
+
 	@Override
 	public void delete(Identity identity) {
-		LOGGER.info("The deletion of the begins for : " +identity);
-	
+        PreparedStatement preparestmt = null;
 		Connection connection = null;
 		try {
 			connection = getConnection();
-			String delete = "DELETE FROM IDENTITIES WHERE DISPLAY_NAME = ?" + "EMAIL = ? " + "UID = ? ";
-			PreparedStatement preparestmt = connection.prepareStatement(delete);
+			String delete = "DELETE FROM IDENTITIESS WHERE DISPLAY_NAME = ? AND EMAIL = ?";
+			
+			 preparestmt = connection.prepareStatement(delete);
 			preparestmt.setString(1, identity.getDisplayName());
 			preparestmt.setString(2, identity.getEmail());
-			preparestmt.setString(3, identity.getUid());
+			//preparestmt.setString(3, identity.getUid());
 			preparestmt.executeUpdate();
-			
-            } catch (ClassNotFoundException | SQLException e) {
-			LOGGER.error("Error while deleting the identity " + identity);
+
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		finally {
+
+			if (preparestmt != null) {
+				try {
+					preparestmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
-	
-	private static Connection getConnection() throws ClassNotFoundException, SQLException
-	{
-		final ConfigurationService confService = ConfigurationService.getInstance();
 
-		final String url = confService.getConfigurationValue(DB_Host);
-		final String password = confService.getConfigurationValue(DB_Pwd);
-		final String username = confService.getConfigurationValue(DB_User);
-
-		Class.forName("org.apache.derby.jdbc.ClientDriver");
-
-		//final Connection connection = DriverManager.getConnection(url, username, password);
-		final Connection connection = DriverManager.getConnection(url, username, password);
+	protected static Connection getConnection()
+			throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
+		Connection connection = null;
+		
+			Configuration confService = Configuration.getInstance();
+			//String url = confService.getConfigurationValue(DB_Host);
+			 String url = confService.getConfigurationValue(DB_Host);
+			 String password = confService.getConfigurationValue(DB_Pwd);
+			 String username = confService.getConfigurationValue(DB_User);
+			Class.forName("org.apache.derby.jdbc.ClientDriver");
+			//connection = DriverManager.getConnection(url);
+			connection = DriverManager.getConnection(url, username, password);
+		
 		return connection;
 	}
 

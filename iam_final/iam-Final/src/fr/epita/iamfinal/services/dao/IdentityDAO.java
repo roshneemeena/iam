@@ -14,7 +14,7 @@ public interface IdentityDAO {
 
 	public List<Identity> search(Identity criteria) throws IdentitySearchException;
 
-	public void update(Identity identity);
+	public void update(Identity identity , Identity identity1);
 
 	public void delete(Identity identity);
 	

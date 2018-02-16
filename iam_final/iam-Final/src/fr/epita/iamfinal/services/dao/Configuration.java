@@ -5,13 +5,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
-public class ConfigurationService {
+
+public class Configuration {
 	
-	private static ConfigurationService instance;
+	private static Configuration instance;
 	private Properties properties;
 
 
-	private ConfigurationService() {
+	private Configuration() {
 		
 			properties = new Properties();
 			try {
@@ -28,9 +29,9 @@ public class ConfigurationService {
 		
 	}
 
-	public static ConfigurationService getInstance() {
+	public static Configuration getInstance() {
 		if (instance == null) {
-			instance = new ConfigurationService();
+			instance = new Configuration();
 		}
 		return instance;
 	}
@@ -39,3 +40,6 @@ public class ConfigurationService {
 		return properties.getProperty(propertyKey);
 	}
 }
+
+
+

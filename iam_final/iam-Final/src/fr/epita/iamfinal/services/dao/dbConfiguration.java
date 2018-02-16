@@ -18,7 +18,7 @@ public class dbConfiguration {
 			}
 
 			
-			final ConfigurationService configService = ConfigurationService.getInstance();
+			final Configuration configService = Configuration.getInstance();
 			final String dbHost = configService.getConfigurationValue("db.host");
 
 			
@@ -30,6 +30,3 @@ public class dbConfiguration {
 			}
 		}
 		}
-
-
-
