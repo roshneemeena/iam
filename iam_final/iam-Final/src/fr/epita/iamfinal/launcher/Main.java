@@ -1,18 +1,10 @@
 package fr.epita.iamfinal.launcher;
-
-import java.util.Scanner;
-
-import org.apache.derby.impl.store.access.btree.WaitError;
-
 import fr.epita.iamfinal.datamodel.Identity;
 import fr.epita.iamfinal.exceptions.IdentityCreateException;
-import fr.epita.iamfinal.services.dao.ConfigurationService;
-import fr.epita.iamfinal.services.dao.IdentityJDBCDAO;
-//import fr.epita.iamfinal.services.dao.IdentityJDBCDAO;
-import fr.epita.iamfinal.services.dao.Login;
-import fr.epita.iamfinal.services.dao.autentication;
-import fr.epita.iamfinal.services.dao.functionality;
-import fr.epita.iamfinal.services.dao.logindao;
+import fr.epita.iamfinal.services.IdentityJDBCDAO;
+import fr.epita.iamfinal.services.Login;
+import fr.epita.iamfinal.services.functionality;
+
 
 public class Main {
 

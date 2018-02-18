@@ -1,4 +1,4 @@
-package fr.epita.iamfinal.services.dao;
+package fr.epita.iamfinal.services;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,9 +22,6 @@ public class functionality extends IdentityJDBCDAO {
 	String lineBreak = "/n";
 	String display_name;
 	String email_id;
-	String d_displayname;
-	String d_email;
-	String d_uid;
 	String u_id;
 	String update_display_name;
 	String update_email_id;
@@ -38,18 +35,17 @@ public class functionality extends IdentityJDBCDAO {
 	JLabel update_emailLabel = new JLabel("NEW EMAIL");
 	JLabel update_uidLabel = new JLabel("NEW UID");
 			
-	JTextField diaplayname = new JTextField(15);
+	JTextField displayname_text = new JTextField(15);
 
-	JTextField email = new JTextField(15);
-	JTextField uid = new JTextField(15);
+	JTextField email_text = new JTextField(15);
+	JTextField uid_text = new JTextField(15);
 	JTextField update_diaplayname = new JTextField(15);
-
-	JTextField update_email = new JTextField(15);
+    JTextField update_email = new JTextField(15);
 	JTextField update_uid = new JTextField(15);
 	JButton createButton = new JButton("Create");
-	JButton SearchBUtton = new JButton("Search:");
-	JButton updateBUtton = new JButton("Update:");
-	JButton deleteBUtton = new JButton("Delete:");
+	JButton SearchBUtton = new JButton("Search");
+	JButton updateBUtton = new JButton("Update");
+	JButton deleteBUtton = new JButton("Delete");
 	JButton done = new JButton("DONE");
 	
 	
@@ -100,11 +96,11 @@ public class functionality extends IdentityJDBCDAO {
 					JPanel create_panel = new JPanel();
 					create_panel.setVisible(true);
 					create_panel.add(displayLabel);
-					create_panel.add(diaplayname);
+					create_panel.add(displayname_text);
 					create_panel.add(emailLabel);
-					create_panel.add(email);
+					create_panel.add(email_text);
 					create_panel.add(uidLabel);
-					create_panel.add(uid);
+					create_panel.add(uid_text);
 					
 					create_panel.add(done);
 					createframe.add(create_panel);
@@ -116,10 +112,11 @@ public class functionality extends IdentityJDBCDAO {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							
-							display_name = diaplayname.getText();
-							email_id = email.getText();
-							u_id = uid.getText();
+							display_name = displayname_text.getText();
+							email_id = email_text.getText();
+							u_id = uid_text.getText();
 							id.create(display_name, email_id, u_id);
+							function();
 							
 						}
 					});
@@ -145,20 +142,30 @@ public class functionality extends IdentityJDBCDAO {
 						JPanel search_panel = new JPanel();
 						search_panel.setVisible(true);
 						search_panel.add(displayLabel);
-						search_panel.add(diaplayname);
+						search_panel.add(displayname_text);
 						search_panel.add(emailLabel);
-						search_panel.add(email);
+						search_panel.add(email_text);
 						search_panel.add(uidLabel);
-						search_panel.add(uid);
+						search_panel.add(uid_text);
 						search_panel.add(done);
-						search_panel.add(search_panel);
+						searchFrame.add(search_panel);
+						done.addActionListener(new ActionListener() {
+							
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								// TODO Auto-generated method stubdisplay_name = diaplayname.getText();
+								display_name = displayname_text.getText();
+								email_id = email_text.getText();
+								u_id = uid_text.getText();
+								
+								
+					    	  id.search(display_name, email_id, u_id);
+					    	  function();
+								
+							}
+						});
 					
-						display_name = diaplayname.getText();
-						email_id = email.getText();
-						u_id = uid.getText();
 						
-						
-			    	  id.search(display_name, email_id, u_id);
 			      }
 				
 			}
@@ -177,11 +184,11 @@ public class functionality extends IdentityJDBCDAO {
 					JPanel updatePanel = new JPanel();
 					updatePanel.setVisible(true);
 					updatePanel.add(displayLabel);
-					updatePanel.add(diaplayname);
+					updatePanel.add(displayname_text);
 					updatePanel.add(emailLabel);
-					updatePanel.add(email);
+					updatePanel.add(email_text);
 					updatePanel.add(uidLabel);
-					updatePanel.add(uid);
+					updatePanel.add(uid_text);
 					updatePanel.add(update_displayLabel);
 					updatePanel.add(update_diaplayname);
 					updatePanel.add(update_emailLabel);
@@ -195,13 +202,14 @@ public class functionality extends IdentityJDBCDAO {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							// TODO Auto-generated method stub
-							display_name = diaplayname.getText();
-							email_id = email.getText();
-							u_id = uid.getText();
+							display_name = displayname_text.getText();
+							email_id = email_text.getText();
+							u_id = uid_text.getText();
 							update_display_name = update_diaplayname.getText();
 							update_email_id = update_email.getText();
 							update_u_id = update_uid.getText();
 							id.update(update_display_name, update_email_id, update_u_id,display_name,email_id,u_id);
+							function();
 							
 						}
 					});
@@ -225,33 +233,23 @@ public class functionality extends IdentityJDBCDAO {
 					JPanel deletePanel = new JPanel();
 					deletePanel.setVisible(true);
 					deletePanel.add(displayLabel);
-					deletePanel.add(diaplayname);
+					deletePanel.add(displayname_text);
 					deletePanel.add(emailLabel);
-					deletePanel.add(email);
+					deletePanel.add(email_text);
 					deletePanel.add(uidLabel);
-					deletePanel.add(uid);
+					deletePanel.add(uid_text);
 					deletePanel.add(done);
 					deleteFrame.add(deletePanel);
-					/*done.addActionListener(new ActionListener() {
-						
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							d_displayname = diaplayname.getText();
-							d_email = email.getText();
-							d_uid = uid.getText();
-							id.delete(d_displayname, d_email, d_uid);
-							
-						}
-					});*/
+					
                        done.addActionListener(new ActionListener() {
 						
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							
-							display_name = diaplayname.getText();
-							email_id = email.getText();
-							u_id = uid.getText();
+							display_name = displayname_text.getText();
+							email_id = email_text.getText();
 							id.delete(display_name, email_id, u_id);
+							function();
 							
 						}
 					});

@@ -1,4 +1,4 @@
-package fr.epita.iamfinal.services.dao;
+package fr.epita.iamfinal.services;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public interface IdentityDAO {
 
 	public void create(String display_name , String email, String uid) throws IdentityCreateException;
 
-	public List<Identity> search(String display_name, String email, String uid) throws IdentitySearchException;
+	public List<String> search(String display_name, String email, String uid) throws IdentitySearchException;
 
 	public void update(String display_name, String email, String uid , String display_name1, String email1, String uid1);
 

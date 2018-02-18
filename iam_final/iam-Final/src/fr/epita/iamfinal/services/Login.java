@@ -1,4 +1,4 @@
-package fr.epita.iamfinal.services.dao;
+package fr.epita.iamfinal.services;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,12 +18,12 @@ public class Login extends functionality{
 	
 	
 	IdentityJDBCDAO identityJDBC = new IdentityJDBCDAO();
-	JFrame f = new JFrame("USER LOGIN");
-	JLabel label = new JLabel("User Name :");
-	JLabel label1 = new JLabel("PAssword:");
-	JTextField t = new JTextField(15);
-	JTextField t1 = new JTextField(15);
-	JButton b = new JButton("LOGIN");
+	JFrame frame = new JFrame("USER LOGIN");
+	JLabel user_label = new JLabel("User Name :");
+	JLabel password_label = new JLabel("PAssword:");
+	JTextField user_text = new JTextField(15);
+	JTextField pass_text = new JTextField(15);
+	JButton login = new JButton("LOGIN");
 	public int count = 0;
 	public int count1;
 	
@@ -35,18 +35,18 @@ public class Login extends functionality{
 	
 	public void frame() {
 		
-		f.setSize(600, 400);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setVisible(true);
-		JPanel p = new JPanel();
-		p.setVisible(true);
-		p.add(label);
-		p.add(t);
-		p.add(label1);
-        p.add(t1);
-        p.add(b);
-        f.add(p);
-	b.addActionListener(new ActionListener() {
+		frame.setSize(600, 400);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+		JPanel panel = new JPanel();
+		panel.setVisible(true);
+		panel.add(user_label);
+		panel.add(user_text);
+		panel.add(password_label);
+		panel.add(pass_text);
+		panel.add(login);
+		frame.add(panel);
+	login.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -54,8 +54,8 @@ public class Login extends functionality{
 			
 				try {
 					connection = getConnection();
-					String user = t.getText().trim(); //to remove spaces
-					String pwd = t1.getText().trim();
+					String user = user_text.getText().trim(); //to remove spaces
+					String pwd = pass_text.getText().trim();
 					String sql = "SELECT USER_NAME, PWD FROM LOGIN WHERE USER_NAME = '"+ user +"' AND PWD = '" + pwd + "'";
 					PreparedStatement pre = connection.prepareStatement(sql);
 					ResultSet rs = pre.executeQuery();
@@ -86,7 +86,7 @@ public class Login extends functionality{
                          //JOptionPane.showMessageDialog(null, "DUPLICATE", f, JOptionPane.ERROR_MESSAGE);
 
 						JOptionPane.showMessageDialog(null, "duplicate credentials", "Error", JOptionPane.ERROR_MESSAGE);
-						f.dispose();
+						frame.dispose();
 						
 						
 					
@@ -94,7 +94,7 @@ public class Login extends functionality{
 					else {
 						
 						JOptionPane.showMessageDialog(null, "usernot found", "Error", JOptionPane.ERROR_MESSAGE);
-						//f.dispose();
+						frame.dispose();
 						
 						
 					}

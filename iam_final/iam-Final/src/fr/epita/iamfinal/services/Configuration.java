@@ -1,4 +1,4 @@
-package fr.epita.iamfinal.services.dao;
+package fr.epita.iamfinal.services;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

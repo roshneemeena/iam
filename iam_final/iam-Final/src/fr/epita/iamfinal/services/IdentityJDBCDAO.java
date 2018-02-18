@@ -1,4 +1,4 @@
-package fr.epita.iamfinal.services.dao;
+package fr.epita.iamfinal.services;
 import fr.epita.iamfinal.exceptions.IdentityCreateException;
 import fr.epita.iamfinal.exceptions.IdentitySearchException;
 
@@ -82,16 +82,17 @@ public class IdentityJDBCDAO implements IdentityDAO{
 	}
 
 	@Override
-	public List<Identity> search(String display_name, String email, String uid) {
+	public List<String> search(String display_name, String email, String uid) {
 
-		final List<Identity> result = new ArrayList<>();
+		final List<String> result = new ArrayList<>();
 		Connection connection = null;
 		ResultSet rs;
 		try {
 			connection = getConnection();
-			 String search = "SELECT DISPLAY_NAME, EMAIL, UID FROM IDENTITIESS "
+			 /*String search = "SELECT DISPLAY_NAME, EMAIL, UID FROM IDENTITIESS "
 					+ "WHERE (? IS NULL OR DISPLAY_NAME LIKE ?)" + "AND (? IS NULL OR EMAIL LIKE ?)"
-					+ " AND (? IS NULL OR UID = ?)";
+					+ " AND (? IS NULL OR UID = ?)";*/
+			String search = "SELECT DISPLAY_NAME, EMAIL, UID FROM IDENTITIESS WHERE DISPLAY_NAME = ? OR EMAIL = ? OR UID = ?";
 			
 			 PreparedStatement prstmt = connection.prepareStatement(search);
 			//prstmt.setString(1, criteria.getDisplayName());
@@ -101,25 +102,33 @@ public class IdentityJDBCDAO implements IdentityDAO{
 			//prstmt.setString(5, criteria.getUid());
 			//prstmt.setString(6, criteria.getUid() + "%");
 			 prstmt.setString(1, display_name);
-			 prstmt.setString(2, display_name + "%");
-			 prstmt.setString(3, email);
-			 prstmt.setString(4, email + "%");
-			 prstmt.setString(5, uid);
-			 prstmt.setString(6, uid + "%");
+			 prstmt.setString(2, email);
+			 prstmt.setString(3, uid);
 			rs = prstmt.executeQuery();
-						
+						if(rs.next()) {
 			while (rs.next()) {
-				Identity currentIdentity = new Identity();
+				/*Identity currentIdentity = new Identity();
 				currentIdentity.setDisplayName(rs.getString("DISPLAY_NAME"));
 				currentIdentity.setDisplayName(rs.getString("DISPLAY_NAME"));
 				currentIdentity.setEmail(rs.getString("EMAIL"));
 				currentIdentity.setUid(rs.getString("UID"));
 				System.out.println(currentIdentity.getDisplayName());
-				System.out.println(currentIdentity.getEmail());
-				result.add(currentIdentity);
+				System.out.println(currentIdentity.getEmail());*/
+				String display = rs.getString("DISPLAY_NAME");
+				String email_id = rs.getString("EMAIL");
+				String u_id = rs.getString("UID");	
+				
+				result.add(display);
+				result.add(email_id);
+				result.add(u_id);
+				//System.out.println("search is done");
 							
 
 			}
+						}
+						else {
+							System.out.println("the data is not available");
+						}
 			
 			rs.close();
 
@@ -137,8 +146,8 @@ public class IdentityJDBCDAO implements IdentityDAO{
 				e.printStackTrace();
 			}
 		}
-		System.out.println("search is done");
-
+		
+        System.out.println(result);
 		return result;
 		
 
