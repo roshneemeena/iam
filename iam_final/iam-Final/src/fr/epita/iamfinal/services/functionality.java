@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -116,6 +117,7 @@ public class functionality extends IdentityJDBCDAO {
 							email_id = email_text.getText();
 							u_id = uid_text.getText();
 							id.create(display_name, email_id, u_id);
+							JOptionPane.showMessageDialog(null, "INSERTION SUCCESSFUL");
 							function();
 							
 						}
@@ -160,6 +162,7 @@ public class functionality extends IdentityJDBCDAO {
 								
 								
 					    	  id.search(display_name, email_id, u_id);
+					    	  JOptionPane.showMessageDialog(null, "SEARCH SUCCESSFUL");
 					    	  function();
 								
 							}
@@ -209,6 +212,7 @@ public class functionality extends IdentityJDBCDAO {
 							update_email_id = update_email.getText();
 							update_u_id = update_uid.getText();
 							id.update(update_display_name, update_email_id, update_u_id,display_name,email_id,u_id);
+							JOptionPane.showMessageDialog(null, "UPDATE SUCCESSFUL");
 							function();
 							
 						}
@@ -249,6 +253,7 @@ public class functionality extends IdentityJDBCDAO {
 							display_name = displayname_text.getText();
 							email_id = email_text.getText();
 							id.delete(display_name, email_id, u_id);
+							JOptionPane.showMessageDialog(null, "DELETION SUCCESSFUL");
 							function();
 							
 						}
