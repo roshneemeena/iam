@@ -2,12 +2,17 @@ package fr.epita.iamfinal.launcher;
 
 import java.util.Scanner;
 
+import org.apache.derby.impl.store.access.btree.WaitError;
+
 import fr.epita.iamfinal.datamodel.Identity;
 import fr.epita.iamfinal.exceptions.IdentityCreateException;
 import fr.epita.iamfinal.services.dao.ConfigurationService;
 import fr.epita.iamfinal.services.dao.IdentityJDBCDAO;
 //import fr.epita.iamfinal.services.dao.IdentityJDBCDAO;
 import fr.epita.iamfinal.services.dao.Login;
+import fr.epita.iamfinal.services.dao.autentication;
+import fr.epita.iamfinal.services.dao.functionality;
+import fr.epita.iamfinal.services.dao.logindao;
 
 public class Main {
 
@@ -22,34 +27,39 @@ public class Main {
 	     
 		}*/
 		Login login = new Login();
-		//login.frame();
-		//if(login.frame())
-		//{
+		login.frame();
 		
-		Identity id1 = new Identity();
+		//functionality fun = new functionality();
+		//fun.function();
+	    
+		/*Identity id1 = new Identity();
 		Identity id2 = new Identity();
 		id2.setDisplayName("Meena");
 		id2.setEmail("roshneemeenagmail.com");
 		id2.setUid("211");
-		id1.setDisplayName("Krishnan");
-		id1.setEmail("kri@gmail.com");
-		id1.setUid("217");
+		id1.setDisplayName("titu");
+		id1.setEmail("titu@gmail.com");
+		id1.setUid("218");
+		functionality fun = new functionality();
+		fun.function(id1, id2);*/
+		//fun.create(id1);
 		//System.out.println(id1);
 		//System.out.println(id1.getDisplayName());
-	     System.out.println(id1.getEmail());
+	     //System.out.println(id1.getEmail());
 		//System.out.println(id1.getUid());
 		//System.out.println("success");
-		IdentityJDBCDAO idjdbc = new IdentityJDBCDAO();
-		idjdbc.create(id2);
+		//IdentityJDBCDAO idjdbc = new IdentityJDBCDAO();
+		//idjdbc.create(id2);
 		//System.out.println(id1.getDisplayName());
 		//idjdbc.delete(id2);
 		//idjdbc.update(id1,id2);
 		//idjdbc.search(id1);
 		}
+}
+		
+	
+		
 		
 
-		//}
-		
-	}
 
 	

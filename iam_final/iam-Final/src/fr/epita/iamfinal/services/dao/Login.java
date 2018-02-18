@@ -14,7 +14,7 @@ import java.sql.ResultSet;
 
 
 
-public class Login extends IdentityJDBCDAO{
+public class Login extends functionality{
 	
 	
 	IdentityJDBCDAO identityJDBC = new IdentityJDBCDAO();
@@ -46,7 +46,7 @@ public class Login extends IdentityJDBCDAO{
         p.add(t1);
         p.add(b);
         f.add(p);
-        b.addActionListener(new ActionListener() {
+	b.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -63,17 +63,20 @@ public class Login extends IdentityJDBCDAO{
 					while(rs.next())
 					{
 						count = count+1;
+						
 					}
 										
 					if (count == 1)
 					{
-						//JOptionPane.showMessageDialog(null, "user found access granted");
-						JOptionPane.showMessageDialog(null, "Could not open file", "Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "user found access granted");
+						functionality fun = new functionality();
+						fun.function();
+						//JOptionPane.showMessageDialog(null, "Could not open file", "Error", JOptionPane.ERROR_MESSAGE);
 						
 						
 				
-						f.dispose();
-						System.exit(0);
+						
+						
 						
 						
 					}
@@ -82,17 +85,17 @@ public class Login extends IdentityJDBCDAO{
 						
                          //JOptionPane.showMessageDialog(null, "DUPLICATE", f, JOptionPane.ERROR_MESSAGE);
 
-						JOptionPane.showMessageDialog(null, "Could not open file", "Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "duplicate credentials", "Error", JOptionPane.ERROR_MESSAGE);
 						f.dispose();
-						System.exit(1);
+						
 						
 					
 					}
 					else {
 						
-						JOptionPane.showMessageDialog(null, "Could not open file", "Error", JOptionPane.ERROR_MESSAGE);
-						f.dispose();
-						System.exit(-1);
+						JOptionPane.showMessageDialog(null, "usernot found", "Error", JOptionPane.ERROR_MESSAGE);
+						//f.dispose();
+						
 						
 					}
 					

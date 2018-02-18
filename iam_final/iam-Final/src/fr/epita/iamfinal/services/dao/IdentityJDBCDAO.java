@@ -22,7 +22,7 @@ public class IdentityJDBCDAO implements IdentityDAO{
 	private static final String DB_User= "db.user";
 
 	@Override
-	public void create(Identity identity) {
+	public void create(String display_name, String email, String uid) {
 		
 
 		Connection connection = null;
@@ -33,9 +33,12 @@ public class IdentityJDBCDAO implements IdentityDAO{
 
 			String insertTableSQL = "INSERT INTO IDENTITIESS(UID, EMAIL, DISPLAY_NAME) VALUES (? , ? ,?)";
 			preparedStatement = connection.prepareStatement(insertTableSQL);
-			preparedStatement.setString(1, identity.getUid());
-			preparedStatement.setString(2, identity.getEmail());
-			preparedStatement.setString(3, identity.getDisplayName());
+			//preparedStatement.setString(1, identity.getUid());
+			preparedStatement.setString(1, uid);
+			preparedStatement.setString(2, email);
+			preparedStatement.setString(3, display_name);
+			//preparedStatement.setString(2, identity.getEmail());
+			//preparedStatement.setString(3, identity.getDisplayName());
 			// execute insert SQL statement
 			preparedStatement.executeUpdate();
 			System.out.println("the identity is insereted");
@@ -79,7 +82,7 @@ public class IdentityJDBCDAO implements IdentityDAO{
 	}
 
 	@Override
-	public List<Identity> search(Identity criteria) {
+	public List<Identity> search(String display_name, String email, String uid) {
 
 		final List<Identity> result = new ArrayList<>();
 		Connection connection = null;
@@ -91,12 +94,18 @@ public class IdentityJDBCDAO implements IdentityDAO{
 					+ " AND (? IS NULL OR UID = ?)";
 			
 			 PreparedStatement prstmt = connection.prepareStatement(search);
-			prstmt.setString(1, criteria.getDisplayName());
-			prstmt.setString(2, criteria.getDisplayName() + "%");
-			prstmt.setString(3, criteria.getEmail());
-			prstmt.setString(4, criteria.getEmail() + "%");
-			prstmt.setString(5, criteria.getUid());
-			prstmt.setString(6, criteria.getUid() + "%");
+			//prstmt.setString(1, criteria.getDisplayName());
+			//prstmt.setString(2, criteria.getDisplayName() + "%");
+			//prstmt.setString(3, criteria.getEmail());
+			//prstmt.setString(4, criteria.getEmail() + "%");
+			//prstmt.setString(5, criteria.getUid());
+			//prstmt.setString(6, criteria.getUid() + "%");
+			 prstmt.setString(1, display_name);
+			 prstmt.setString(2, display_name + "%");
+			 prstmt.setString(3, email);
+			 prstmt.setString(4, email + "%");
+			 prstmt.setString(5, uid);
+			 prstmt.setString(6, uid + "%");
 			rs = prstmt.executeQuery();
 						
 			while (rs.next()) {
@@ -136,7 +145,7 @@ public class IdentityJDBCDAO implements IdentityDAO{
 	}
 
 	@Override
-	public void update(Identity identity , Identity identity1) {
+	public void update(String display_name, String email, String uid , String display_name1, String email1, String uid1) {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -144,12 +153,18 @@ public class IdentityJDBCDAO implements IdentityDAO{
 			//String update = " UPDATE IDENTITIESS SET DISPLAY_NAME = ? AND EMAIL = ? AND UID = ? WHERE DISPLAY_NAME = ? AND EMAIL = ? AND UID = ?";
 			String update = " UPDATE IDENTITIESS SET DISPLAY_NAME = ?, EMAIL = ?,  UID = ? WHERE DISPLAY_NAME = ? AND EMAIL = ? AND UID = ?";
 			 pstmt = connection.prepareStatement(update);
-			pstmt.setString(1, identity.getDisplayName());
+			/*pstmt.setString(1, identity.getDisplayName());
 			pstmt.setString(2, identity.getEmail());
 			pstmt.setString(3, identity.getUid());
 			pstmt.setString(4, identity1.getDisplayName());
 			pstmt.setString(5, identity1.getEmail());
-			pstmt.setString(6, identity1.getUid());
+			pstmt.setString(6, identity1.getUid());*/
+			pstmt.setString(1, display_name);
+			pstmt.setString(2, email);
+			pstmt.setString(3, uid);
+		    pstmt.setString(4, display_name1);
+			pstmt.setString(5, email1);
+			pstmt.setString(6, uid1);
 		
 			pstmt.executeUpdate();
 		} catch (ClassNotFoundException | SQLException e) {
@@ -185,18 +200,22 @@ public class IdentityJDBCDAO implements IdentityDAO{
 	}
 
 	@Override
-	public void delete(Identity identity) {
+	public void delete(String display_name, String email, String uid) {
         PreparedStatement preparestmt = null;
 		Connection connection = null;
 		try {
 			connection = getConnection();
-			String delete = "DELETE FROM IDENTITIESS WHERE DISPLAY_NAME = ? AND EMAIL = ?";
+			String delete = "DELETE FROM IDENTITIESS WHERE DISPLAY_NAME = ? AND EMAIL = ? AND UID = ?";
 			
-			 preparestmt = connection.prepareStatement(delete);
-			preparestmt.setString(1, identity.getDisplayName());
-			preparestmt.setString(2, identity.getEmail());
+			preparestmt = connection.prepareStatement(delete);
+			/*preparestmt.setString(1, identity.getDisplayName());
+			preparestmt.setString(2, identity.getEmail());*/
 			//preparestmt.setString(3, identity.getUid());
+			preparestmt.setString(1, display_name);
+			preparestmt.setString(2, email);
+			preparestmt.setString(3, uid);
 			preparestmt.executeUpdate();
+			System.out.println("deleted");
 
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();

@@ -10,12 +10,12 @@ public interface IdentityDAO {
 
 	//public static final Integer number = 0;
 
-	public void create(Identity identity) throws IdentityCreateException;
+	public void create(String display_name , String email, String uid) throws IdentityCreateException;
 
-	public List<Identity> search(Identity criteria) throws IdentitySearchException;
+	public List<Identity> search(String display_name, String email, String uid) throws IdentitySearchException;
 
-	public void update(Identity identity , Identity identity1);
+	public void update(String display_name, String email, String uid , String display_name1, String email1, String uid1);
 
-	public void delete(Identity identity);
+	public void delete(String display_name, String email, String uid);
 	
 }
