@@ -8,7 +8,7 @@ import fr.epita.iamfinal.services.functionality;
 
 public class Main {
 
-	public static void main(String[] args) throws IdentityCreateException {
+	public static void main(String[] args)  {
 		
 		Login login = new Login();
 		login.frame();

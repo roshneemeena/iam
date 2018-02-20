@@ -40,7 +40,14 @@ public class Logger {
 	{
 		printMessage(message, INFO);
 	}
-	
+/**
+ * <h3>Description </h3>
+ * <p>
+ * This method is Message in the time in the logger file.
+ * </p>	
+ * @param message
+ * @param Level
+ */
 	
 	private void printMessage(String message , String Level)
 	{
@@ -56,6 +63,12 @@ public class Logger {
 		return sdf.format(date);
 		
 	}
+	/**
+	 * <h3>Description </h3>
+	 * This is to display the error if program stops in the logger file.
+	 * @param message
+	 * @param e
+	 */
 	
 	public void error(String message , Exception e)
 	{

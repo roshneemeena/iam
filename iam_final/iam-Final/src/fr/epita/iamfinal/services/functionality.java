@@ -13,6 +13,10 @@ import javax.swing.JTextField;
 import org.apache.derby.catalog.types.UDTAliasInfo;
 
 import fr.epita.iamfinal.datamodel.Identity;
+import fr.epita.iamfinal.exceptions.IdentityCreateException;
+import fr.epita.iamfinal.exceptions.IdentityDeleteException;
+import fr.epita.iamfinal.exceptions.IdentitySearchException;
+import fr.epita.iamfinal.exceptions.IdentityUpdateException;
 
 public class functionality extends IdentityJDBCDAO {
 	
@@ -56,27 +60,29 @@ public class functionality extends IdentityJDBCDAO {
 	 public functionality() {
 		
 	}
+/**
+ * <h3>Description</h3>
+	 * <p>
+	 * This function create a menu to which has create,search,update and delete options and based on the selection
+	 * it performs the required function .
+	 * </p>
+	 * <h3>utilization</h3>
+	 * <p>
+	 * This method uses the create method,search method,update method and delete method
+	 * from IdentityJDBC class.
+	 * </p>
+ */
 	
 	
-	public void function() {
+	public void function()  {
 		
 		
 		frame.setSize(600, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		JPanel panel = new JPanel();
-		
-		
-		
-		
 		panel.setVisible(true);
-	    //panel.add(displayLabel);
-		//panel.add(diaplayname);
-		//panel.add(emailLabel);
-		//panel.add(email);
-		//panel.add(uidLabel);
-		//panel.add(uid);
-		panel.add(createButton);
+	    panel.add(createButton);
 		panel.add(SearchBUtton);
 		panel.add(updateBUtton);
         panel.add(deleteBUtton);
@@ -102,13 +108,9 @@ public class functionality extends IdentityJDBCDAO {
 					create_panel.add(email_text);
 					create_panel.add(uidLabel);
 					create_panel.add(uid_text);
-					
 					create_panel.add(done);
 					createframe.add(create_panel);
-				
-					
-					
-					done.addActionListener(new ActionListener() {
+				done.addActionListener(new ActionListener() {
 						
 						@Override
 						public void actionPerformed(ActionEvent e) {
@@ -116,9 +118,15 @@ public class functionality extends IdentityJDBCDAO {
 							display_name = displayname_text.getText();
 							email_id = email_text.getText();
 							u_id = uid_text.getText();
-							id.create(display_name, email_id, u_id);
-							JOptionPane.showMessageDialog(null, "INSERTION SUCCESSFUL");
-							function();
+							try {
+								id.create(display_name, email_id, u_id);
+							} catch (IdentityCreateException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							//JOptionPane.showMessageDialog(null, "INSERTION SUCCESSFUL");
+							createframe.dispose();
+							
 							
 						}
 					});
@@ -161,10 +169,14 @@ public class functionality extends IdentityJDBCDAO {
 								u_id = uid_text.getText();
 								
 								
-					    	  id.search(display_name, email_id, u_id);
-					    	  JOptionPane.showMessageDialog(null, "SEARCH SUCCESSFUL");
-					    	  function();
-								
+					    	  try {
+								id.search(display_name, email_id, u_id);
+							} catch (IdentitySearchException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+					    	 // JOptionPane.showMessageDialog(null, "SEARCH SUCCESSFUL");
+					    	  searchFrame.dispose();
 							}
 						});
 					
@@ -211,9 +223,14 @@ public class functionality extends IdentityJDBCDAO {
 							update_display_name = update_diaplayname.getText();
 							update_email_id = update_email.getText();
 							update_u_id = update_uid.getText();
-							id.update(update_display_name, update_email_id, update_u_id,display_name,email_id,u_id);
-							JOptionPane.showMessageDialog(null, "UPDATE SUCCESSFUL");
-							function();
+							try {
+								id.update(update_display_name, update_email_id, update_u_id,display_name,email_id,u_id);
+							} catch (IdentityUpdateException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							//JOptionPane.showMessageDialog(null, "UPDATE SUCCESSFUL");
+							updateFrame.dispose();
 							
 						}
 					});
@@ -252,9 +269,15 @@ public class functionality extends IdentityJDBCDAO {
 							
 							display_name = displayname_text.getText();
 							email_id = email_text.getText();
-							id.delete(display_name, email_id, u_id);
-							JOptionPane.showMessageDialog(null, "DELETION SUCCESSFUL");
-							function();
+							u_id = uid_text.getText();
+							try {
+								id.delete(display_name, email_id, u_id);
+							} catch (IdentityDeleteException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							//JOptionPane.showMessageDialog(null, "DELETION SUCCESSFUL");
+							deleteFrame.dispose();
 							
 						}
 					});

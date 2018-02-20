@@ -4,7 +4,9 @@ import java.util.List;
 
 import fr.epita.iamfinal.datamodel.Identity;
 import fr.epita.iamfinal.exceptions.IdentityCreateException;
+import fr.epita.iamfinal.exceptions.IdentityDeleteException;
 import fr.epita.iamfinal.exceptions.IdentitySearchException;
+import fr.epita.iamfinal.exceptions.IdentityUpdateException;
 
 public interface IdentityDAO {
 
@@ -14,8 +16,8 @@ public interface IdentityDAO {
 
 	public List<String> search(String display_name, String email, String uid) throws IdentitySearchException;
 
-	public void update(String display_name, String email, String uid , String display_name1, String email1, String uid1);
+	public void update(String display_name, String email, String uid , String display_name1, String email1, String uid1) throws IdentityUpdateException;
 
-	public void delete(String display_name, String email, String uid);
+	public void delete(String display_name, String email, String uid) throws IdentityDeleteException;
 	
 }

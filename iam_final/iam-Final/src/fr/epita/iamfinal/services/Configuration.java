@@ -29,6 +29,13 @@ public class Configuration {
 		
 	}
 
+	/**
+	 * <h3>Description</h3>
+	 * <p>
+	 * This is used to get the instance of the database connection
+	 * </p>
+	 * @return
+	 */
 	public static Configuration getInstance() {
 		if (instance == null) {
 			instance = new Configuration();
@@ -36,6 +43,14 @@ public class Configuration {
 		return instance;
 	}
 
+     /**
+      * <h3> Description </h3>
+      * <p>
+      * This method is to take the values from the property file
+      * </p>
+      * @param propertyKey
+      * @return
+      */
 	public String getConfigurationValue(String propertyKey) {
 		return properties.getProperty(propertyKey);
 	}

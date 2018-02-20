@@ -30,8 +30,20 @@ public class Login extends functionality{
 	public Login() 
 	{
 		
-		//frame();
+
 	}
+	/**
+	 * <h3>Description</h3>
+	 * <p>
+	 * This method is for getting the user authentication.
+	 * And check if the authentication match with the database
+	 * If the credentials are correct it will proceed with the create, update , search and delete operations.
+	 * </p>
+	 * <h3> utilisation </h3>
+	 * <p>
+	 * This method uses the function method from functionality class to display the menu on authentication.
+	 * </p>
+	 */
 	
 	public void frame() {
 		
@@ -71,33 +83,19 @@ public class Login extends functionality{
 						JOptionPane.showMessageDialog(null, "user found access granted");
 						functionality fun = new functionality();
 						fun.function();
-						//JOptionPane.showMessageDialog(null, "Could not open file", "Error", JOptionPane.ERROR_MESSAGE);
 						
-						
-				
-						
-						
-						
-						
-					}
+						}
 					else if (count >1) {
-						//JOptionPane.showMessageDialog(p, "duplicate user Access denied",sql, JOptionPane.ERROR_MESSAGE);;
 						
-                         //JOptionPane.showMessageDialog(null, "DUPLICATE", f, JOptionPane.ERROR_MESSAGE);
-
-						JOptionPane.showMessageDialog(null, "duplicate credentials", "Error", JOptionPane.ERROR_MESSAGE);
-						frame.dispose();
+                        JOptionPane.showMessageDialog(null, "duplicate credentials", "Error", JOptionPane.ERROR_MESSAGE);
 						
-						
-					
-					}
+						}
 					else {
 						
-						JOptionPane.showMessageDialog(null, "usernot found", "Error", JOptionPane.ERROR_MESSAGE);
-						frame.dispose();
+						JOptionPane.showMessageDialog(null, "user not found", "Error", JOptionPane.ERROR_MESSAGE);
 						
 						
-					}
+						}
 					
 					rs.close();
 					pre.close();

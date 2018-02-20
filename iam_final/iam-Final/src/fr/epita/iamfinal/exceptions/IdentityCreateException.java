@@ -2,7 +2,13 @@ package fr.epita.iamfinal.exceptions;
 import fr.epita.iamfinal.datamodel.Identity;
 
 public class IdentityCreateException extends IdentityDataException{
-	
+	/**<h3>Description </h3>
+	 * <p>
+	 * This throws exception when something goes wrong during insertion.
+	 * </p>
+	 * @param e
+	 * @param identity
+	 */
 	
 	public IdentityCreateException(Exception e, Identity identity)
 	{
