@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import java.awt.event.*;
@@ -12,7 +13,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 
-
+/**
+ * 
+ * @author Roshnee
+ *
+ */
 
 public class Login extends functionality{
 	
@@ -22,7 +27,8 @@ public class Login extends functionality{
 	JLabel user_label = new JLabel("User Name :");
 	JLabel password_label = new JLabel("PAssword:");
 	JTextField user_text = new JTextField(15);
-	JTextField pass_text = new JTextField(15);
+	//JTextField pass_text = new JTextField(15);
+	JPasswordField pass_text = new JPasswordField(15);
 	JButton login = new JButton("LOGIN");
 	public int count = 0;
 	public int count1;
@@ -67,7 +73,8 @@ public class Login extends functionality{
 				try {
 					connection = getConnection();
 					String user = user_text.getText().trim(); //to remove spaces
-					String pwd = pass_text.getText().trim();
+					pass_text.setEchoChar('*');
+					String pwd = pass_text.getText();
 					String sql = "SELECT USER_NAME, PWD FROM LOGIN WHERE USER_NAME = '"+ user +"' AND PWD = '" + pwd + "'";
 					PreparedStatement pre = connection.prepareStatement(sql);
 					ResultSet rs = pre.executeQuery();

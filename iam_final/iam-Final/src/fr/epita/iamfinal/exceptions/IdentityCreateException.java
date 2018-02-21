@@ -1,5 +1,10 @@
 package fr.epita.iamfinal.exceptions;
 import fr.epita.iamfinal.datamodel.Identity;
+/**
+ * 
+ * @author Roshnee
+ *
+ */
 
 public class IdentityCreateException extends IdentityDataException{
 	/**<h3>Description </h3>

@@ -14,6 +14,11 @@ import java.util.List;
 import fr.epita.logger.Logger;
 
 import fr.epita.iamfinal.datamodel.Identity;
+/**
+ * 
+ * @author Roshnee
+ *
+ */
 
 
 public class IdentityJDBCDAO implements IdentityDAO{
@@ -62,7 +67,7 @@ public class IdentityJDBCDAO implements IdentityDAO{
 			LOGGER.error("Error occured during insertion", e);
 
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			LOGGER.error("Error occured during insertion", e);
 			e.printStackTrace();
 		
 		}

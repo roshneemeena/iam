@@ -17,7 +17,11 @@ import fr.epita.iamfinal.exceptions.IdentityCreateException;
 import fr.epita.iamfinal.exceptions.IdentityDeleteException;
 import fr.epita.iamfinal.exceptions.IdentitySearchException;
 import fr.epita.iamfinal.exceptions.IdentityUpdateException;
-
+/**
+ * 
+ * @author Roshnee
+ *
+ */
 public class functionality extends IdentityJDBCDAO {
 	
 	IdentityJDBCDAO id = new IdentityJDBCDAO();

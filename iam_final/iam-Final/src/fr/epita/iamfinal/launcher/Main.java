@@ -4,7 +4,11 @@ import fr.epita.iamfinal.exceptions.IdentityCreateException;
 import fr.epita.iamfinal.services.IdentityJDBCDAO;
 import fr.epita.iamfinal.services.Login;
 import fr.epita.iamfinal.services.functionality;
-
+/**
+ * 
+ * @author Roshnee
+ *
+ */
 
 public class Main {
 

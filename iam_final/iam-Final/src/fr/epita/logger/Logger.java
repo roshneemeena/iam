@@ -6,7 +6,11 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+/**
+ * 
+ * @author Roshnee
+ *
+ */
 public class Logger {
 
 	private static final String logPath = "/tmp/javaApplications.log";

@@ -5,7 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
-
+/**
+ * 
+ * @author Roshnee
+ *
+ */
 public class Configuration {
 	
 	private static Configuration instance;
