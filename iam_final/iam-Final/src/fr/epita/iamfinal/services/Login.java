@@ -78,18 +78,16 @@ public class Login extends functionality{
 						
 					}
 										
-					if (count == 1)
+					if (count !=0)
 					{
-						JOptionPane.showMessageDialog(null, "user found access granted");
+						//JOptionPane.showMessageDialog(null, "user found access granted");
 						functionality fun = new functionality();
 						fun.function();
+						//frame.dispose();
+						
 						
 						}
-					else if (count >1) {
-						
-                        JOptionPane.showMessageDialog(null, "duplicate credentials", "Error", JOptionPane.ERROR_MESSAGE);
-						
-						}
+					
 					else {
 						
 						JOptionPane.showMessageDialog(null, "user not found", "Error", JOptionPane.ERROR_MESSAGE);

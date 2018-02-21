@@ -120,19 +120,27 @@ public class functionality extends IdentityJDBCDAO {
 							u_id = uid_text.getText();
 							try {
 								id.create(display_name, email_id, u_id);
+								
+								createframe.dispose();
+								frame.dispose();
+								
+								
+								
 							} catch (IdentityCreateException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 							//JOptionPane.showMessageDialog(null, "INSERTION SUCCESSFUL");
-							createframe.dispose();
+							
+							
 							
 							
 						}
 					});
 					
 					//id.create(display_name, email_id, u_id);
-					
+				
+				
 					
 				}
 				
@@ -176,7 +184,10 @@ public class functionality extends IdentityJDBCDAO {
 								e1.printStackTrace();
 							}
 					    	 // JOptionPane.showMessageDialog(null, "SEARCH SUCCESSFUL");
+					    	  
 					    	  searchFrame.dispose();
+					    	  frame.dispose();
+					    	  
 							}
 						});
 					
@@ -230,6 +241,7 @@ public class functionality extends IdentityJDBCDAO {
 								e1.printStackTrace();
 							}
 							//JOptionPane.showMessageDialog(null, "UPDATE SUCCESSFUL");
+							frame.dispose();
 							updateFrame.dispose();
 							
 						}
@@ -271,16 +283,27 @@ public class functionality extends IdentityJDBCDAO {
 							email_id = email_text.getText();
 							u_id = uid_text.getText();
 							try {
+								
+								
+								deletePanel.resetKeyboardActions();
 								id.delete(display_name, email_id, u_id);
+								
+								deleteFrame.dispose();
+								frame.dispose();
+								
 							} catch (IdentityDeleteException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 							//JOptionPane.showMessageDialog(null, "DELETION SUCCESSFUL");
-							deleteFrame.dispose();
+							
+							
+							
 							
 						}
 					});
+                       
+						
 					
 				}
 				

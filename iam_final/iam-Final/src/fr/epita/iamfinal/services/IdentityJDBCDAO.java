@@ -111,11 +111,16 @@ public class IdentityJDBCDAO implements IdentityDAO{
 			connection = getConnection();
 		
 			String search = "SELECT DISPLAY_NAME, EMAIL, UID FROM IDENTITIESS WHERE DISPLAY_NAME = ? AND EMAIL = ? AND UID = ?";
+			 //String  = "SELECT DISPLAY_NAME, EMAIL, UID FROM IDENTITIES " + "WHERE (? IS NULL OR DISPLAY_NAME LIKE ?) "
+					//+ "AND (? IS NULL OR EMAIL LIKE ?) " + "AND (? IS NULL OR UID = ?)";
 			
 			 PreparedStatement prstmt = connection.prepareStatement(search);
 			 prstmt.setString(1, display_name);
+			 //prstmt.setString(2, display_name + "%");
 			 prstmt.setString(2, email);
+			 //prstmt.setString(4, email + "%");
 			 prstmt.setString(3, uid);
+			 //prstmt.setString(6, uid + "%");
 			rs = prstmt.executeQuery();
 						if(rs.next()) {
 			               while (rs.next()) {
@@ -125,6 +130,7 @@ public class IdentityJDBCDAO implements IdentityDAO{
 				           result.add(display);
 				           result.add(email_id);
 				           result.add(u_id);
+				           System.out.println(display);
 				
 							
 
@@ -182,7 +188,7 @@ public class IdentityJDBCDAO implements IdentityDAO{
 				System.out.println("updated");
 			LOGGER.info("update is done successfully");
 			}
-			else
+			if(check == 0)
 			{
 				System.out.println("identity not available");
 			}
@@ -240,19 +246,20 @@ public class IdentityJDBCDAO implements IdentityDAO{
 			preparestmt.setString(3, uid);
 			check = preparestmt.executeUpdate();
 			
-			LOGGER.info("deletion is done successfully");
+			
 			if(check != 0)
 			{
 				System.out.println("deleted");
+				LOGGER.info("deletion is done successfully");
 			
 			}
-			else
+			if (check == 0)
 			{
 				System.out.println(" identity not available");
 			}
 
 		} catch (ClassNotFoundException | SQLException e) {
-			LOGGER.error("The error occired during deletion");
+			LOGGER.error("The error occured during deletion");
 			e.printStackTrace();
 		} 
 		finally {
