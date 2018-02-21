@@ -23,7 +23,7 @@ public class IdentityJDBCDAO implements IdentityDAO{
 	private static final String DB_Pwd= "db.pwd";
 	private static final String DB_User= "db.user";
 	Logger LOGGER = new Logger(IdentityJDBCDAO.class);
-	
+
 	/**
 	 * <h3>Description</h3>
 	 * <p>
